@@ -16,23 +16,23 @@ export class ProdutoService {
     return this.produtoRepository.find();
   }
 
-  async findOne(id: string): Promise<ProdutoEntity> {
-    const produto = await this.produtoRepository.findOne(id);
-    if (!produto) {
-      throw new NotFoundException(`Produto com ID '${id}' não encontrado`);
-    }
-    return produto;
-  }
+  // async findOne(id: string): Promise<ProdutoEntity> {
+  //   const produto = await this.produtoRepository.findOne(id);
+  //   if (!produto) {
+  //     throw new NotFoundException(`Produto com ID '${id}' não encontrado`);
+  //   }
+  //   return produto;
+  // }
   
   async create(produtoData: ProdutoEntity): Promise<ProdutoEntity> {
     const novoProduto = this.produtoRepository.create(produtoData);
     return this.produtoRepository.save(novoProduto);
   }
 
-  async update(id: string, produtoData: ProdutoEntity): Promise<ProdutoEntity> {
-    await this.produtoRepository.update(id, produtoData);
-    return this.findOne(id);
-  }
+  // async update(id: string, produtoData: ProdutoEntity): Promise<ProdutoEntity> {
+  //   await this.produtoRepository.update(id, produtoData);
+  //   return this.findOne(id);
+  // }
 
   async delete(id: string): Promise<void> {
     await this.produtoRepository.delete(id);

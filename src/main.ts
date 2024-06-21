@@ -4,7 +4,9 @@ import { ValidationPipe } from "@nestjs/common";
 import { useContainer } from "class-validator";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{
+    logger:console
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
