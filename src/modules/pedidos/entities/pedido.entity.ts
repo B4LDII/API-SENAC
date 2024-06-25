@@ -1,12 +1,11 @@
 
-import { CidadeEntity } from "src/modules/cidades/entities/cidade.entity";
 import { ClienteEntity } from "src/modules/clientes/entities/cliente.entity";
 import { PedidoProdutoEntity } from "src/modules/pedidos_produtos/entities/pedido_produto.entity";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  Double,
+ 
   OneToMany,
   JoinColumn,
   ManyToOne,
@@ -21,7 +20,7 @@ export class PedidoEntity {
   @CreateDateColumn({ name: "horario", })
   horario: string;
   
-  @Column({ name: "endereco", length: 100, nullable: false })
+  @Column({ name: "preco", length: 100, nullable: false })
   endereco: string;
 
   @ManyToOne(() => ClienteEntity, cliente => cliente.pedidos)

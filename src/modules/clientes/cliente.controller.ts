@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, } from "@nestjs/common";
 import { ClienteEntity } from "./entities/cliente.entity";
 import { ClienteService } from "./cliente.service";
-
 import { v4 as uuid } from "uuid";
 
 

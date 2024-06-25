@@ -28,6 +28,7 @@ export class PedidoProdutoEntity {
   @ManyToOne(() => ProdutoEntity, produto => produto.pedidoProdutos)
   @JoinColumn({ name: 'produto_id' })
   produto: ProdutoEntity;
+    nomeProduto: string;
 
 }
 
