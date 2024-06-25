@@ -25,6 +25,10 @@ export class PedidoService {
   }
 
   async updatePedido(id: string, pedido: UpdatePedidoDTO) {
+    const pedidoFinded = await this.pedidoRepository.findOneBy({ id });
+    if (pedidoFinded == null) {
+      throw new NotFoundException("Pedido não foi encontrado!");
+    }
     await this.pedidoRepository.update(id, pedido);
   }
 

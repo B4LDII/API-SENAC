@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, } from "@nestjs/common";
 import { ClienteEntity } from "./entities/cliente.entity";
 import { ClienteService } from "./cliente.service";
 import { v4 as uuid } from "uuid";
+import { CreateClienteDTO } from "./DTO/create_clientes.dto";
 
 
 @Controller("/cliente")
@@ -12,19 +13,18 @@ export class ClienteController {
 
   @Post()
   async createCliente(
-    @Body() data
+    @Body() data: CreateClienteDTO
   ) {
+    const clienteEntity = new ClienteEntity();
 
-    if (!data.nome||data.altura||data.cidade||data.nascimento) {
-      throw new Error("sem nome")
-    }
+    clienteEntity.id = uuid();
+    clienteEntity.nome = data.nome;
+    clienteEntity.altura = data.altura;
+    clienteEntity.nascimento = data.nascimento;
+    clienteEntity.cidade = data.cidade;
+  
+    await this.clienteService.createCliente(clienteEntity)
 
-    const cliente = {
-      id: uuid(),
-      ...data
-    }
-    await this.clienteService.createCliente(cliente)
-
-    return { message: "Cliente cadastrada!" };
+    return { message: "Cliente cadastrado!" };
   }
 }

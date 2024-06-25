@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Post, } from "@nestjs/common";
 import { CidadeService } from "./cidade.service";
 import { v4 as uuid } from "uuid";
+import { CreateCidadeDTO } from "./DTO/create_cidade.dto";
+import { CidadeEntity } from "./entities/cidade.entity";
 @Controller("/cidade")
 export class CidadeController {
   
@@ -8,18 +10,14 @@ export class CidadeController {
 
   @Post()
   async createCliente(
-    @Body() data
+    @Body() data: CreateCidadeDTO
   ) {
+    const cidadeEntity = new CidadeEntity();
 
-    if (!data.nome) {
-      throw new Error("sem nome")
-    }
-
-    const cliente = {
-      id: uuid(),
-      ...data
-    }
-    await this.cidadeService.createCidade(data)
+    CidadeEntity.id = uuid();
+    CidadeEntity.nome = data.nome;
+  
+    await this.cidadeService.createCidade(cidadeEntity)
 
     return { message: "Cidade cadastrada!" };
   }

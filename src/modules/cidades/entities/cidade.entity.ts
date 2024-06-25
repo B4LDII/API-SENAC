@@ -19,4 +19,6 @@ export class CidadeEntity {
 
   @OneToMany(() => ClienteEntity, cliente => cliente.cidade)
   clientes: ClienteEntity[];
+  static nome: string;
+  static id: string;
 }

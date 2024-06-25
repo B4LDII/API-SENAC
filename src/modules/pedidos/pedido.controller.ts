@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, Param, Post, Put, } from "@nestjs/common
 import { PedidoService } from "./pedido.service";
 import { v4 as uuid } from "uuid";
 import { UpdatePedidoDTO } from "./DTO/update_pedido.dto";
+import { CreatePedidoDTO } from "./DTO/create_pedidos.dto";
+import { PedidoEntity } from "./entities/pedido.entity";
 
 
 @Controller("/pedido")
@@ -15,24 +17,7 @@ export class PedidoController {
    return pedidos;
   }
   
-  @Post()
-  async createPedido(
-    @Body() data
-  ) {
-
-    // if (!data.nome||data.preco||data.quantidade||data.categoria) {
-    //   throw new Error("sem nome")
-    // }
-
-    const pedido = {
-      id: uuid(),
-      ...data
-    }
-    await this.pedidoService.createPedido(pedido)
-
-    return { message: "Pedido cadastrado!" };
-  }
-
+ 
   @Put("/:id")
   async updatePedido(
     @Param("id") id: string,
@@ -52,5 +37,22 @@ export class PedidoController {
       pedido: pedidoDeleted,
       message: "Pedido removido com sucesso!",
     };
+  }
+
+  @Post()
+  async createPedido(
+    @Body() data: CreatePedidoDTO
+  ) {
+    const pedidoEntity = new PedidoEntity();
+
+    pedidoEntity.id = uuid();
+    pedidoEntity.horario = data.horario;
+    pedidoEntity.endereco = data.endereco;
+    pedidoEntity.cliente = data.cliente;
+   
+  
+    await this.pedidoService.createPedido(pedidoEntity)
+
+    return { message: "Pedido cadastrado!" };
   }
 }

@@ -22,6 +22,10 @@ export class ProdutoService {
     return this.produtoRepository.save(novoProduto);
   }
   async updateProduto(id: string, produto: UpdateProdutoDTO) {
+    const produtoFinded = await this.produtoRepository.findOneBy({ id });
+    if (produtoFinded == null) {
+      throw new NotFoundException("Produto não foi encontrado!");
+    }
     await this.produtoRepository.update(id, produto);
   }
 

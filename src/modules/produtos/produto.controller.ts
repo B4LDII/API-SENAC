@@ -3,6 +3,7 @@ import { ProdutoService } from "./produto.service";
 import { v4 as uuid } from "uuid";
 import { UpdateProdutoDTO } from "./DTO/update_produto.DTO";
 import { ProdutoEntity } from "./entities/produto.entity";
+import { CreateProdutoDTO } from "./DTO/create_produtos.dto";
 
 
 @Controller("/produto")
@@ -17,18 +18,18 @@ export class ProdutoController {
   
   @Post()
   async createProduto(
-    @Body() data
+    @Body() data: CreateProdutoDTO
   ) {
+    const produtoEntity = new ProdutoEntity();
 
-    // if (!data.nome||data.preco||data.quantidade||data.categoria) {
-    //   throw new Error("sem nome")
-    // }
-
-    const produto = {
-      id: uuid(),
-      ...data
-    }
-    await this.produtoService.createProduto(produto)
+    produtoEntity.id = uuid();
+    produtoEntity.nome = data.nome;
+    produtoEntity.preco = data.preco;
+    produtoEntity.quantidade = data.quantidade;
+    produtoEntity.categoria = data.categoria;
+   
+  
+    await this.produtoService.createProduto(produtoEntity)
 
     return { message: "Produto cadastrado!" };
   }

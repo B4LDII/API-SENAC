@@ -29,6 +29,5 @@ export class ProdutoEntity {
 
   @OneToMany(() => PedidoProdutoEntity, pedidoProduto => pedidoProduto.produto)
   pedidoProdutos: PedidoProdutoEntity[];
-  produto: any;
 }
 

@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Post, } from "@nestjs/common";
 import { CategoriaService } from "./categoria.service";
 import { v4 as uuid } from "uuid";
+import { CreateCategoriasDTO } from "./DTO/create_categorias.dto";
+import { CategoriaEntity } from "./entities/categoria.entity";
 
 
 @Controller("/categoria")
@@ -11,18 +13,14 @@ export class CategoriaController {
 
   @Post()
   async createCategoria(
-    @Body() data
+    @Body() data: CreateCategoriasDTO
   ) {
+    const categoriaEntity = new CategoriaEntity();
 
-    if (!data.nome) {
-      throw new Error("sem nome")
-    }
-
-    const cliente = {
-      id: uuid(),
-      ...data
-    }
-    await this.categoriaService.createCategoria(data)
+    categoriaEntity.id = uuid();
+    categoriaEntity.nome = data.nome;
+  
+    await this.categoriaService.createCategoria(categoriaEntity)
 
     return { message: "Categoria cadastrada!" };
   }
